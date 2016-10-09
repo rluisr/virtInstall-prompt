@@ -46,7 +46,6 @@ EOF
 
 version() {
   echo "$(basename ${0}) version 0.1"
-
   exit 1
 }
 
