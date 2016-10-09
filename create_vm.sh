@@ -1,4 +1,4 @@
-#!/bin/bash -eux
+#!/bin/bash -eu
 stty erase ^H
 
 readonly CURRENT_PATH=$(cd $(dirname $0) && pwd)
