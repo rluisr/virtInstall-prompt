@@ -51,8 +51,8 @@ version() {
 }
 
 prepare_setup() {
-  # virt-install --name develop --ram 2048 --disk path=/mnt/2.0TB/images/develop/develop.qcow2 --vcpus 4 --os-type linux --os-variant rhel7 --network bridge=br0 --graphics none --console pty,target_type=serial --location "http://ftp.iij.ad.jp/pub/linux/centos/7/os/x86_64/" --extra-args "inst.ks=file:/centos7.ks.cfg console=ttyS0"
-  echo -e "Start creating new virtual machines..."
+  blue "Start creating new virtual machines..."
+  blue "If you don't set parameter don't 'Enter' set 'none'."
 
   define_specs "name" "CentOS"
   define_specs "vcpus" "4"
@@ -64,7 +64,7 @@ prepare_setup() {
   define_specs "os_variant" "rhel7"
   define_specs "network" "bridge=br0 / network=default"
   define_specs "graphics" "none"
-  define_specs "console" "pty.target_type=serial"
+  define_specs "console" "pty"
   define_specs "serial" "pty"
   define_specs "location" "/iso/CentOS.iso"
   define_specs "initrd_inject" "/tmp/centos.ks.cfg / none"
@@ -105,11 +105,16 @@ show_specs() {
   echo -e "--console: ${console}"
   echo -e "--serial: ${serial}"
   echo -e "--location: ${location}"
-  echo -e "--initrd_inject: ${initrd_inject}"
-  echo -e "--extra_args: ${extra_args}"
+  echo -e "--initrd-inject: ${initrd_inject}"
+  echo -e "--extra-args: ${extra_args}"
   echo -e "----------------------------------------"
 }
 
 setup() {
-  
-  `virt-install --name ${name} --vcpus ${vcpus} --ram ${ram} --arch ${arch} --os-type ${os_type} --os-variant ${os_variant} --network ${network} --graphics ${graphics} --console ${console} --serial ${serial} --location ${location} --extra_args ${extra_args}`
+  [ ${disk_path} = "none" ] && [ ${disk_pool} != "none" ] && exec="virt-install --name ${name} --vcpus ${vcpus} --ram ${ram} --arch ${arch} --os-type ${os_type} --os-variant ${os_variant} --disk ${disk_pool} --network ${network} --graphics ${graphics} --console ${console} --serial ${serial} --location ${location} --extra-args '${extra_args}'"
+  [ ${disk_path} != "none" ] && [ ${disk_pool} = "none" ] && exec="virt-install --name ${name} --vcpus ${vcpus} --ram ${ram} --arch ${arch} --os-type ${os_type} --os-variant ${os_variant} --disk ${disk_path} --network ${network} --graphics ${graphics} --console ${console} --serial ${serial} --location ${location} --extra-args '${extra_args}'"
+
+  [ ${initrd_inject} != "none" ] && exec="${exec} --initrd-inject ${initrd_inject}" || :
+
+  eval ${exec}
+}
