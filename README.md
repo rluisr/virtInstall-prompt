@@ -5,7 +5,7 @@ If you use this script, no need remember parameter.
 
 ## Usage
 `$ git clone https://github.com/rluisr/virtInstall-prompt`<br>
-`$ chmod +x create_vm.sh && sudo ./create_vm.sh`
+`$ cd virtInstall-prompt && chmod +x create_vm.sh && sudo ./create_vm.sh`
 
 **If you don't set parameter, not `Enter` set `none`**
 
