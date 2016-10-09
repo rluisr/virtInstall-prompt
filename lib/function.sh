@@ -52,7 +52,7 @@ version() {
 
 prepare_setup() {
   blue "Start creating new virtual machines..."
-  blue "If you don't set parameter don't 'Enter' set 'none'."
+  red "If you don't set parameter don't 'Enter' set 'none'."
 
   define_specs "name" "CentOS"
   define_specs "vcpus" "4"
