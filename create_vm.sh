@@ -1,9 +1,20 @@
 #!/bin/bash -eu
 stty erase ^H
-stty erase ^?
 
 readonly CURRENT_PATH=$(cd $(dirname $0) && pwd)
 . ${CURRENT_PATH}/lib/function.sh
+
+checkOS
+
+if [ ${OS} = "Mac" ]; then
+  stty erase ^?
+elif [ ${OS} = "Linux" ]; then
+  stty erase ^H
+elif [ ${OS} = "Cygwin" ]; then
+  stty erase ^H #?
+else
+  stty erase ^H #?
+fi
 
 if [ $# -eq 0 ]; then
   prepare_setup
