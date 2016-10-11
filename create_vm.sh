@@ -1,5 +1,6 @@
 #!/bin/bash -eu
 stty erase ^H
+stty erase ^?
 
 readonly CURRENT_PATH=$(cd $(dirname $0) && pwd)
 . ${CURRENT_PATH}/lib/function.sh
