@@ -9,7 +9,7 @@ checkOS
 if [ ${OS} = "Mac" ]; then
   stty erase ^?
 elif [ ${OS} = "Linux" ]; then
-  stty erase ^H
+  stty erase ^?
 elif [ ${OS} = "Cygwin" ]; then
   stty erase ^H #?
 else
